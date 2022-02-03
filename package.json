@@ -1,0 +1,24 @@
+{
+  "name": "icare",
+  "version": "0.0.1",
+  "description": "symptom checker capstone project for team 5 in 2022sp CSE 5914",
+  "main": "main.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AAAblaze/iCare.git"
+  },
+  "keywords": [
+    "symptom",
+    "checker",
+    "capstone"
+  ],
+  "author": "Hanyuan Cui, Kangxuan Ye, Kunal Arya, Patrick Sheeran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AAAblaze/iCare/issues"
+  },
+  "homepage": "https://github.com/AAAblaze/iCare#readme"
+}
