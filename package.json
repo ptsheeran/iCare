@@ -4,7 +4,8 @@
   "description": "symptom checker capstone project for team 5 in 2022sp CSE 5914",
   "main": "main.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
