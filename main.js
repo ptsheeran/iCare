@@ -1,2 +1,2 @@
-var msg = "This is main program!"
+const msg = 'This is main program!'
 console.log(msg)
