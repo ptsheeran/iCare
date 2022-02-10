@@ -1,0 +1,3 @@
+(1.) go to server folder and run 'node elasticsearch.js', this would input some examples in our elasticsearch 
+2. run 'npm run serve' to have the main page on localhost port 8080
+3. take a new terminal while 8080 is running, go to server folder and run 'node server.js' to host the server
