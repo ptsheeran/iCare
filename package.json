@@ -9,63 +9,48 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AAAblaze/iCare.git"
-  },
-  "keywords": [
-    "symptom",
-    "checker",
-    "capstone"
-  ],
-  "author": "Hanyuan Cui, Kangxuan Ye, Kunal Arya, Patrick Sheeran",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AAAblaze/iCare/issues"
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.1",
+    "cors": "^2.8.4",
+    "elasticsearch": "^15.1.1",
+    "express": "^4.16.3",
+    "vue": "^2.5.16",
+    "vue-axios": "^2.1.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11",
-    "eslint-config-google": "^0.14.0"
+    "@vue/cli-plugin-babel": "^3.0.0-rc.3",
+    "@vue/cli-plugin-eslint": "^3.0.0-rc.3",
+    "@vue/cli-service": "^3.0.0-rc.3",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "babel": {
+    "presets": [
+      "@vue/app"
+    ]
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": true,
-      "browser": true
+      "node": true
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended",
-      "google"
+      "eslint:recommended"
     ],
+    "rules": {},
     "parserOptions": {
-      "parser": "babel-eslint",
-      "ecmaVersion": "latest",
-      "sourceType": "module",
-      "ecmaFeatures": { "modules": true }
-    },
-    "plugins": [
-      "vue"
-    ],
-    "rules": {
-      "indent": ["error", 4],
-      "linebreak-style": 0,
-      "quotes": ["error", "single"],
-      "semi": ["error", "never"]
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
     }
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not ie <= 8"
   ]
 }
