@@ -3,6 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "description": "symptom checker capstone project for team 5 in 2022sp CSE 5914",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AAAblaze/iCare.git"
+  },
+  "keywords": [
+    "symptom",
+    "checker",
+    "capstone"
+  ],
+  "author": "Hanyuan Cui, Kangxuan Ye, Kunal Arya, Patrick Sheeran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AAAblaze/iCare/issues"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
