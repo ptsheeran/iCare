@@ -1,15 +1,45 @@
 <template>
-  <div id="app" class="container">
-    <div class="input-group input-group-lg bottom">
-      <div class="input-group-prepend">
-        <span class="input-group-text">Search</span>
+  <div id="app" class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">iCare Symptom Checker</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.mayoclinic.org/symptom-checker/select-symptom/itt-20009075">Learn More</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
       </div>
-      <input type="text" 
-        class="form-control col-md-6" 
-        @keyup.prevent="search"
-        v-model="query" />
+    </nav>
+    <br><br><br>
+    <div class="text-center">
+      <img src="./assets/med.png" alt="" width="150" height="auto">
+      <br><br>
+      <h3>What are your symptoms?</h3>
     </div>
-    
+    <br>
+    <div class="input-group input-group-lg center-block w-50">
+      <span class="input-group-text" id="inputGroup-sizing-lg">Search</span>
+      <input type="text" 
+      class="form-control" 
+      aria-label="Sizing example input" 
+      aria-describedby="inputGroup-sizing-lg"
+      placeholder="Enter here" 
+      @keyup.prevent="search"
+      v-model="query" />
+    </div>
+
     <div v-if="data" class="card-row">
       <div v-for="(value, index) in data" 
         :key="index"
@@ -51,14 +81,17 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #E1E7E7;
-}
+div.container{text-align: center;}
 
-  .bottom {
-    margin-top: 50px;
-    margin-left: 200px;
-  }
+
+.container-fluid {
+  background-color: #F0F8FF;
+}
+.center-block {
+    display: table;  /* Instead of display:block */
+    margin-left: auto;
+    margin-right: auto;
+}
 .card-row {
   display: flex;
   justify-content: center;
