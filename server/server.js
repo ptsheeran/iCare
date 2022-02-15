@@ -28,15 +28,15 @@ app.get('/search', function (req, res){
       from: 0,
       query: {
         match: {
-                cast_name: {
+                symptoms: {
                     query: req.query['q'],
-                    fuzziness: 4
+                    // fuzziness: 4
                 }
             }
         }
     }
    
-    client.search({index:'vue-elastic', body:body, type:'characters_list'})
+    client.search({index:'symptoms-icare-default', body:body})
     .then(results => {
             res.send(results.hits.hits);
         
