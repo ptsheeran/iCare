@@ -10,22 +10,22 @@
         v-model="query" />
     </div>
     
-    <div  class="card-row">
-    <div v-if="data" v-for="(value, index) in data" 
-      :key="index"
-      :ref="`card_${index}`"
-         class="card">
+    <div v-if="data" class="card-row">
+      <div v-for="(value, index) in data" 
+        :key="index"
+        :ref="`card_${index}`"
+          class="card">
       
-      <img class="card-image" :src="value._source.url">
+        <!-- <img class="card-image" :src="value._source.url"> -->
       
-      <div class="card-footer">
-        <h3 class="card-title">{{value._source.cast_name}}</h3>
-        <p class="card-text">by 
-          <span class="card-author">{{value._source.og_name}}</span>
-        </p>
+        <div class="card-footer">
+          <h3 class="card-title">{{value._source.illness}}</h3>
+          <!-- <p class="card-text">by 
+            <span class="card-author">{{value._source.og_name}}</span>
+          </p> -->
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
