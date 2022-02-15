@@ -6,7 +6,7 @@ const client = new elasticsearch.Client({
 });
 
 client.indices.create({
-    index: 'vue-elastic'
+    index: 'symptoms-icare-default'
 }, function(error, response, status) {
     if (error) {
         console.log(error);
@@ -15,14 +15,13 @@ client.indices.create({
     }
 });
 
-const bulkIndex = function bulkIndex(index, type, data) {
+const bulkIndex = function bulkIndex(index, data) {
     let bulkBody = [];
   
     data.forEach(item => {
       bulkBody.push({
         index: {
-          _index: index,
-          _type: type
+          _index: index
         }
       });
       bulkBody.push(item);
@@ -48,7 +47,7 @@ async function indexData() {
     const articlesRaw = await fs.readFileSync('./data.json');
     const articles = JSON.parse(articlesRaw);
     console.log(`${articles.length} items parsed from data file`);
-    bulkIndex('vue-elastic', 'characters_list', articles);
+    bulkIndex('symptoms-icare-default', articles);
   }
 
   indexData();
