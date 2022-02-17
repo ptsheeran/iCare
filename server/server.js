@@ -22,18 +22,21 @@ client.ping({ requestTimeout: 30000 }, function(error) {
 });
 
 app.get('/search', function (req, res){
-    
     let body = {
       size: 100,
       from: 0,
       query: {
-        match: {
-                symptoms: {
-                    query: req.query['q'],
-                    // fuzziness: 4
-                }
+        // match: {
+        //         symptoms: {
+        //             query: req.query['q'],
+        //         }
+        //     }
+            query_string: {
+                query: req.query['q'],
+                default_field: 'symptoms',
             }
         }
+        
     }
    
     client.search({index:'symptoms-icare-default', body:body})

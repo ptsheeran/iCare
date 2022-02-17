@@ -71,10 +71,24 @@ export default {
   },
   methods: {
     search() {
-        this.axios.get('http://localhost:5000/search?q='+this.query)
+        let queryText = ''
+        let words = this.query.split(' ')
+        queryText = '(' + words[0] + ') '
+        if(words.length > 1){
+          for(let i = 1; i < words.length; i++){
+            if(words[i] != ''){
+              queryText = queryText + 'AND' + '(' + words[i] + ')'
+            }
+          }
+        }
+        this.axios.get('http://localhost:5000/search?q='+queryText)
               .then(response => {
                 this.data = response.data;
           })
+        // this.axios.get('http://localhost:5000/search?q='+this.query)
+        //       .then(response => {
+        //         this.data = response.data;
+        //   })
     }
   }
 }
