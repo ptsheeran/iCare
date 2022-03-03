@@ -26,30 +26,26 @@ app.get('/search', function (req, res){
       size: 100,
       from: 0,
       query: {
-        // match: {
-        //         symptoms: {
-        //             query: req.query['q'],
-        //         }
-        //     }
-            query_string: {
+        match: {
+            symptoms: {
                 query: req.query['q'],
-                default_field: 'symptoms',
+                analyzer: "search_grams"
             }
         }
-        
-    }
+    }    
+}
    
-    client.search({index:'symptoms-icare-default', body:body})
-    .then(results => {
-            res.send(results.hits.hits);
-        
-    })
-    .catch(err=>{
-      console.log(err)
-      res.send([]);
-    });
-  
-  })
+client.search({index:'symptoms-icare-default', body:body})
+.then(results => {
+        res.send(results.hits.hits);
+    
+})
+.catch(err=>{
+    console.log(err)
+    res.send([]);
+});
+
+})
 
 app.listen(app.get('port'), function() {
     console.log('Your node.js server is running on PORT: ',app.get('port'));

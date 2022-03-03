@@ -46,7 +46,7 @@
         :ref="`card_${index}`"
           class="card">
       
-        <!-- <img class="card-image" :src="value._source.url"> -->
+        <img class="card-image" :src="value._source.img">
       
         <div class="card-footer">
           <h3 class="card-title">{{value._source.illness}}</h3>
@@ -54,6 +54,8 @@
             <span class="card-author">{{value._source.og_name}}</span>
           </p> -->
         </div>
+
+        <a class="btn btn-primary stretched-link" :href="value._source.url"></a>
       </div>
     </div>
     <div>

@@ -1,12 +1,47 @@
 const elasticsearch = require('elasticsearch');
 const fs = require('fs');
+const path = require("path");
 
 const client = new elasticsearch.Client({
     hosts: [ 'http://localhost:9200']
 });
 
+ESsetting = {
+  "settings": {
+    "analysis": {
+      "filter": {
+        "index_filter": { 
+          "type": "common_grams",
+          "common_words": "_english_" 
+        },
+        "search_filter": { 
+          "type": "common_grams",
+          "common_words": "_english_", 
+          "query_mode":   true
+        },
+        "stop_words_filter": {
+          "type": "stop",
+          "common_words": "_english_",
+          "ignore_case": true
+        }
+      },
+      "analyzer": {
+        "index_grams": { 
+          "tokenizer":  "standard",
+          "filter":   [ "lowercase", "index_filter", "stop_words_filter"]
+        },
+        "search_grams": { 
+          "tokenizer": "standard",
+          "filter":  [ "lowercase", "stop_words_filter"]
+        }
+      }
+    }
+  }
+}
+
 client.indices.create({
-    index: 'symptoms-icare-default'
+    index: 'symptoms-icare-default',
+    body: ESsetting
 }, function(error, response, status) {
     if (error) {
         console.log(error);
@@ -44,7 +79,7 @@ client.bulk({body: bulkBody})
   };
 
 async function indexData() {
-    const articlesRaw = await fs.readFileSync('./data.json');
+    const articlesRaw = await fs.readFileSync(path.resolve(__dirname, 'data.json'))
     const articles = JSON.parse(articlesRaw);
     console.log(`${articles.length} items parsed from data file`);
     bulkIndex('symptoms-icare-default', articles);
