@@ -56,6 +56,9 @@
         </div>
       </div>
     </div>
+    <div>
+      <button :onclick="testInput">Test Input</button>
+    </div>
   </div>
 </template>
 
@@ -89,6 +92,14 @@ export default {
         //       .then(response => {
         //         this.data = response.data;
         //   })
+    },
+    testInput() {
+      const inputsRaw = await fs.readFileSync('./assets/blns.json');
+      const inputs = JSON.parse(inputsRaw);
+      for(text of inputs){
+        this.query = text
+        this.search()
+      }
     }
   }
 }
