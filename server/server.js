@@ -37,7 +37,7 @@ app.get('/search', function (req, res){
    
 client.search({index:'symptoms-icare-default', body:body})
 .then(results => {
-        res.send(results.hits.hits);
+        res.send(results.hits);
     
 })
 .catch(err=>{

@@ -72,29 +72,21 @@ export default {
   data() {
     return {
       query: '',
-      data: []
+      data: [],
+      maxScore: 0
     }
   },
   methods: {
     search() {
-        let queryText = ''
-        let words = this.query.split(' ')
-        queryText = '(' + words[0] + ') '
-        if(words.length > 1){
-          for(let i = 1; i < words.length; i++){
-            if(words[i] != ''){
-              queryText = queryText + 'AND' + '(' + words[i] + ')'
-            }
-          }
-        }
-        this.axios.get('http://localhost:5000/search?q='+queryText)
+        this.axios.get('http://localhost:5000/search?q='+this.query)
               .then(response => {
-                this.data = response.data;
+                this.maxScore = response.data.max_score
+                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore);
+                // eslint-disable-next-line no-console
+                console.log(this.data)
+                // eslint-disable-next-line no-console
+                console.log(response.data.hits)
           })
-        // this.axios.get('http://localhost:5000/search?q='+this.query)
-        //       .then(response => {
-        //         this.data = response.data;
-        //   })
     },
     async testInput() {
       const inputs = getTestInputs()
