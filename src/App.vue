@@ -58,11 +58,15 @@
         <a class="btn btn-primary stretched-link" :href="value._source.url"></a>
       </div>
     </div>
+    <div>
+      <button v-on:click="testInput">Test Input</button>
+    </div>
   </div>
 </template>
 
 
 <script>
+import getTestInputs from './getTestInputs.js'
 
 export default {
   data() {
@@ -83,6 +87,17 @@ export default {
                 // eslint-disable-next-line no-console
                 console.log(response.data.hits)
           })
+    },
+    async testInput() {
+      const inputs = getTestInputs()
+      for(let text of inputs){
+        // eslint-disable-next-line no-console
+        console.log(text)
+        this.query = text
+        // eslint-disable-next-line no-console
+        console.log("testing: ", text)
+        this.search()
+      }
     }
   }
 }
