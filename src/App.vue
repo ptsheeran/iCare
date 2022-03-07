@@ -59,13 +59,14 @@
       </div>
     </div>
     <div>
-      <button :onclick="testInput">Test Input</button>
+      <button v-on:click="testInput">Test Input</button>
     </div>
   </div>
 </template>
 
 
 <script>
+import getTestInputs from './getTestInputs.js'
 
 export default {
   data() {
@@ -95,11 +96,14 @@ export default {
         //         this.data = response.data;
         //   })
     },
-    testInput() {
-      const inputsRaw = await fs.readFileSync('./assets/blns.json');
-      const inputs = JSON.parse(inputsRaw);
-      for(text of inputs){
+    async testInput() {
+      const inputs = getTestInputs()
+      for(let text of inputs){
+        // eslint-disable-next-line no-console
+        console.log(text)
         this.query = text
+        // eslint-disable-next-line no-console
+        console.log("testing: ", text)
         this.search()
       }
     }
