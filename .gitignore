@@ -15,3 +15,5 @@ npm-debug.log*
 .idea
 .vscode
 
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
