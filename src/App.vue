@@ -59,16 +59,11 @@
         <a class="btn btn-primary stretched-link" :href="value._source.url"></a>
       </div>
     </div>
-    <div>
-      <button v-on:click="testInput">Test Input</button>
-    </div>
   </div>
 </template>
 
 
 <script>
-import getTestInputs from './getTestInputs.js'
-
 export default {
   data() {
     return {
@@ -79,27 +74,17 @@ export default {
   },
   methods: {
     search() {
-        this.axios.get('http://localhost:5000/search?q='+this.query)
+        let query = encodeURI(this.query);
+        this.axios.get('http://localhost:5000/search?q='+query)
               .then(response => {
                 this.maxScore = response.data.max_score
-                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore);
+                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore).splice(0,8);
                 // eslint-disable-next-line no-console
                 console.log(this.data)
                 // eslint-disable-next-line no-console
                 console.log(response.data.hits)
           })
     },
-    async testInput() {
-      const inputs = getTestInputs()
-      for(let text of inputs){
-        // eslint-disable-next-line no-console
-        console.log(text)
-        this.query = text
-        // eslint-disable-next-line no-console
-        console.log("testing: ", text)
-        this.search()
-      }
-    }, 
     showImage() {
       let imgAddress;
       let random = this.getRandomInt(0,9);
