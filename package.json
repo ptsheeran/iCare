@@ -20,7 +20,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "node ./test/server/testElasticSearchTransactions.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
