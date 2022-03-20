@@ -46,7 +46,8 @@
         :ref="`card_${index}`"
           class="card">
       
-        <img class="card-image" :src="value._source.img">
+        <img v-if="value._source.img" class="card-image" :src="value._source.img">
+        <img v-else class="card-image" :src="showImage()">
       
         <div class="card-footer">
           <h3 class="card-title">{{value._source.illness}}</h3>
@@ -58,16 +59,11 @@
         <a class="btn btn-primary stretched-link" :href="value._source.url"></a>
       </div>
     </div>
-    <div>
-      <button v-on:click="testInput">Test Input</button>
-    </div>
   </div>
 </template>
 
 
 <script>
-import getTestInputs from './getTestInputs.js'
-
 export default {
   data() {
     return {
@@ -78,26 +74,59 @@ export default {
   },
   methods: {
     search() {
-        this.axios.get('http://localhost:5000/search?q='+this.query)
+        let query = encodeURI(this.query);
+        this.axios.get('http://localhost:5000/search?q='+query)
               .then(response => {
                 this.maxScore = response.data.max_score
-                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore);
+                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore).splice(0,8);
                 // eslint-disable-next-line no-console
                 console.log(this.data)
                 // eslint-disable-next-line no-console
                 console.log(response.data.hits)
           })
     },
-    async testInput() {
-      const inputs = getTestInputs()
-      for(let text of inputs){
-        // eslint-disable-next-line no-console
-        console.log(text)
-        this.query = text
-        // eslint-disable-next-line no-console
-        console.log("testing: ", text)
-        this.search()
+    showImage() {
+      let imgAddress;
+      let random = this.getRandomInt(0,9);
+        switch (random) {
+          case 0:
+            imgAddress = 'https://revcycleintelligence.com/images/site/article_headers/_normal/2020-01-06_nurses.png';
+            break;
+          case 1:
+            imgAddress = 'https://imageio.forbes.com/specials-images/imageserve/5edaacf9b6ac5c00076559df/A-stethoscope-and-clipboard-in-a-doctor-s-office-/960x0.jpg?fit=bounds&format=jpg&width=960';
+            break;
+          case 2:
+            imgAddress = 'https://www.cdc.gov/diseasesconditions/images/cards/covid19.jpg?_=56306';
+            break;
+          case 3:
+            imgAddress = 'https://www.mei.edu/sites/default/files/2019-01/Virus.jpg';
+            break;
+          case 4:
+            imgAddress = 'https://www.verywellhealth.com/thmb/0zMhQRr2MYoD0YBUvH77iGrrX-k=/1080x1080/filters:fill(87E3EF,1)/IlloDot_InfectiousDiseases-0fc3a9d79c1345da8858ad5f7ec2cba3.png';
+            break;
+          case 5:
+            imgAddress = 'https://www.scripps.edu/_files/images/science-and-medicines/translational-institute/600x400_viral_infecteous_disease_3d_graphic.jpg';
+            break;
+          case 6:
+            imgAddress = 'https://www.merck.com/wp-content/uploads/sites/5/2020/02/infection-disease.jpeg?resize=666,664';
+            break;
+          case 7:
+            imgAddress = 'https://sadarpsych.com/wp-content/uploads/2019/11/illness-vs-disease.jpg';
+            break;
+          case 8:
+            imgAddress = 'https://media.istockphoto.com/photos/modern-empty-temporary-intensive-care-emergency-room-is-ready-to-picture-id1295301481?b=1&k=20&m=1295301481&s=170667a&w=0&h=2W-5mbvRju-L4DE-fzGlhHRWhX5fS72MjUcVwj0_jvg=';
+            break;
+          case 9:
+            imgAddress = 'https://www.news-medical.net/image.axd?picture=2021%2F5%2Fshutterstock_1535690891.jpg';
+            break;
       }
+      return imgAddress;
+    }, 
+    /* Auxiliary function for showImage() to generate random integers */
+    getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
   }
 }
