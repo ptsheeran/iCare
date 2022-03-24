@@ -1,0 +1,35 @@
+[
+    {"illness": "Allergies",
+    "description": "Allergies are an immune response triggered by allergens, an ordinarily harmful substance.",
+    "symptoms": "Because there are so many possible causes, the symptoms of allergies vary widely. Airborne allergens, like pollen and pet dander, are likely to cause:Eye irritation Runny nose Stuffy nose Puffy, watery eyes Sneezing Inflamed, itchy nose and throat Allergens that are consumed, like foods or certain medications, can cause: Hives or skin rashes Gastrointestinal distress (diarrhea, nausea, vomiting, excessing gas, indigestion) Tingling or swelling of the lips, face, or tongue Itchiness Difficulty breathing or wheezing Fainting/ or lightheadedness In cases of a more extreme response, called anaphylaxis, symptoms are severe and life-threatening.",
+    "url": "https://www.mayoclinic.org/diseases-conditions/allergies/symptoms-causes/syc-20351497",
+    "img": "https://images.ctfassets.net/4yflszkpcwkt/7ehx3zOO08sXjIgDOLfiG4/f016428ee5a1dade63c3096d434c68b4/allergic-reaction-1920x1920.jpg"
+    },
+    {"illness": "Cold and Flu",
+    "description": "Colds and influenza (flu) are the most common illnesses among college students.",
+    "symptoms": "Flu symptoms come on suddenly and affect the body all over. Flu symptoms are usually more serious than a cold and include: fever (100° F), headache, more intense pain and fatigue, andmore severe, often dry cough. When you get the flu, you are also more prone to bronchitis, sinus, and ear infections. Cold symptoms mostly affect above the neck and include: a runny or stuffy nose (nasal congestion), sneezing, sore throat, and cough. You may also experience a mild headache, body aches or a low grade fever. Typically, a cold lasts 2-14 days.",
+    "url": "https://www.mayoclinic.org/diseases-conditions/common-cold/symptoms-causes/syc-20351605"
+    },
+    {"illness": "Conjunctivitis (Pink Eye)",
+    "description": "an inflammation of the transparent membrane (conjunctiva) that lines your eyelids and part of your eyeballs",
+    "symptoms": "These symptoms may last a few hours to several weeks: redness, itching, tearing, burning sensation, pus-like discharge and/or crusting of the eyelids. Because conjunctivitis causes inflammation of the small blood vessels in the conjunctiva to become more prominent, the whites of your eyes will appear pink or red. When you wake you are likely to feel that your eyelids are pasted shut, and your vision may not be as clear as usual",
+    "url": "https://www.mayoclinic.org/diseases-conditions/pink-eye/symptoms-causes/syc-20376355",
+    "img": "https://cdn-cdaka.nitrocdn.com/PcdvZLgjKZYuIFetQKTRCrJlrHAkPlYJ/assets/static/optimized/rev-aef9c21/wp-content/uploads/2018/06/conjunctivitis-treatment-nj.jpg"
+    },
+    {"illness": "Diarrhea",
+    "symptoms": "watery, loose stools frequent bowel movementscramping or pain in the abdomen, nausea, bloatingpossibly fever or bloody stools, depending on the cause",
+    "url": "https://www.mayoclinic.org/diseases-conditions/diarrhea/symptoms-causes/syc-20352241",
+    "img": "https://www.drugs.com/health-guide/images/4c33864b-8374-4028-9351-302873e7dc40.jpg"
+    },
+    {"illness": "Headaches",
+    "description": "Everyone suffers the occasional mild headache, but if you experience debilitating pain and/or abnormally frequent headaches, you probably want to find relief. There are countless causes of headaches, which differ for each person, so youâ€™ll have to do some experimenting to figure out the cause of your pain. Fortunately, the vast majority of headaches are primary headaches, not the result of underlying medical conditions. The three most common types are cluster, tension-type, and migraine.A cluster headache affects a specific point of the head, often the eye, and is characterized by sharp, piercing pain. Migraine and tension-type headaches are far more common. â€œTensionâ€œ headaches are now called â€œtension-typeâ€œ headaches because pain is not only caused by stress, but also poor posture, depression, and even sexual activity. In fact, recent studies have shown a connection between low serotonin levels and so-called â€œtensionâ€œ headaches.",
+    "symptoms": "pulsing or throbbing quality begins with intense pain on one side of the head, which eventually spreads felt on one or both sides of the head lasts several hours severe enough to interfere with routine activities may be accompanied by nausea or vomiting sometimes preceded by visual changes, such as an aura of zigzag lines or flashes of lightlight and noise can make the headache worse, while sleep tends to relieve symptoms Symptoms of a tension-type headache: constant, dull ache felt on both sides of the head a feeling of squeezing or pressure does not usually interfere with routine activities lasts from 30 minutes to a few days",
+    "url": "https://www.mayoclinic.org/symptoms/headache/basics/causes/sym-20050800",
+    "img": "https://www.regionalneurological.com/wp-content/uploads/2019/08/AdobeStock_244803452.jpeg"
+    },
+    {"illness": "Mononucleosis",
+    "symptoms": "The most well known symptom of mono is extreme fatigue, forcing the infected person to nap frequently. If you experience such extreme fatigue accompanied by other symptoms, such as swollen lymph glands and spleen, sore throat, fever, loss of appetite, and muscle aches, you may want to get tested for mono. The basis for testing whether you have mono is the presence of antibodies produced by white blood cells. Many people infected with mono don't get sick, or have such mild symptoms they don't know they have it. EBV is usually in the body 30-50 days before an infected person develops symptoms. Surprisingly, 80-95% of adults in the US have been infected by the time they're 40, but only about 20% know they've had mono.",
+    "url": "https://www.mayoclinic.org/diseases-conditions/mononucleosis/symptoms-causes/syc-20350328",
+    "img": "https://junisa.ru/storage/image/2/3/8/583cf6a4542809a64ad14586ec00ebe0.jpg"
+    }
+]
