@@ -78,7 +78,7 @@ export default {
         this.axios.get('http://localhost:5000/search?q='+query)
               .then(response => {
                 this.maxScore = response.data.max_score
-                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore).splice(0,8);
+                this.data = response.data.hits.filter(hit => hit._score > 0.7 * this.maxScore).splice(0,8);
                 // eslint-disable-next-line no-console
                 console.log(this.data)
                 // eslint-disable-next-line no-console
