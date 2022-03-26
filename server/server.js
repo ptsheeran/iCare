@@ -36,16 +36,26 @@ app.get('/search', function (req, res){
     let symptoms = req.query['q'].split(',')
     let symptomsArray = []
     for (symptom of symptoms) {
-        symptomsArray.push(
-            {
+        if(symptom.split(' ').length == 1) {
+            symptomsArray.push({
+                match: {
+                    symptoms: {
+                        query: symptom,
+                        analyzer: "search_grams",
+                        fuzziness: "1"
+                    }
+                }
+            })
+        } else {
+            symptomsArray.push({
                 match_phrase: {
                     symptoms: {
                         query: symptom,
-                        analyzer: "search_grams"
+                        analyzer: "search_grams",
                     }
                 }
-            }
-        )
+            })
+        }
     }
     let body = {
         size: 100,
