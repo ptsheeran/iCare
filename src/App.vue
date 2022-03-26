@@ -41,7 +41,7 @@
     <div class="center-block w-25">
       <ul class="list-group" id="symptom-list">
         <li v-for="(item, index) in items" :key="item.id" class="list-group-item">
-          {{ item.symptom }}
+          {{ item }}
           <button @click="removeItem(index)" class="close">
             <span>&times;</span> 
           </button>
@@ -49,7 +49,7 @@
       </ul>
     </div>
     <br>
-    <button type="button" class="btn btn-primary btn-lg btn-block w-25 center-block">SEARCH</button>
+    <button @click="search" type="button" class="btn btn-primary btn-lg btn-block w-25 center-block">SEARCH</button>
     <br>
     <br>
     <br>
@@ -93,7 +93,6 @@
 export default {
   data() {
     return {
-      query: '',
       data: [],
       maxScore: 0,
       items: [
@@ -104,11 +103,12 @@ export default {
   },
   methods: {
     search() {
-        let query = encodeURI(this.query);
+        // let query = encodeURI(this.query);
+        let query = encodeURI(this.items.join())
         this.axios.get('http://localhost:5000/search?q='+query)
               .then(response => {
                 this.maxScore = response.data.max_score
-                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore).splice(0,8);
+                this.data = response.data.hits.filter(hit => hit._score > 0.7 * this.maxScore).splice(0,8);
                 // eslint-disable-next-line no-console
                 console.log(this.data)
                 // eslint-disable-next-line no-console
@@ -160,10 +160,13 @@ export default {
     },
     /* Add user input item to list */
     addItem() {
-      if (this.newItem) {
-        this.items.push({
-          symptom: this.newItem
-        });
+      if (this.newItem.length < 50) {
+        if (this.newItem) {
+          this.items.push(this.newItem);
+          this.newItem = "";
+        }
+      } else {
+        window.alert("Symptoms cannot exceed 50 characters.")
         this.newItem = "";
       }
     },
