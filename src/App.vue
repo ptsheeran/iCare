@@ -29,7 +29,33 @@
       <h3>What are your symptoms?</h3>
     </div>
     <br>
-    <div class="input-group input-group-lg center-block w-50">
+    <div class="center-block w-25">
+      <div class="input-group">
+        <input v-model="newItem" @keyup.enter="addItem" id="userinput" type="text" class="form-control" placeholder="Add a symptom..." aria-label="Add an item" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button @click="addItem" class="btn btn-outline-info" id="enter" type="button">Add</button>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="center-block w-25">
+      <ul class="list-group" id="symptom-list">
+        <li v-for="(item, index) in items" :key="item.id" class="list-group-item">
+          {{ item.symptom }}
+          <button @click="removeItem(index)" class="close">
+            <span>&times;</span> 
+          </button>
+        </li>
+      </ul>
+    </div>
+    <br>
+    <button type="button" class="btn btn-primary btn-lg btn-block w-25 center-block">SEARCH</button>
+    <br>
+    <br>
+    <br>
+
+    <!-- Old input box -->
+    <!--div class="input-group input-group-lg center-block w-50">
       <span class="input-group-text" id="inputGroup-sizing-lg">Search</span>
       <input type="text" 
       class="form-control" 
@@ -38,7 +64,7 @@
       placeholder="Enter here" 
       @keyup.prevent="search"
       v-model="query" />
-    </div>
+    </div> -->
 
     <div v-if="data" class="card-row">
       <div v-for="(value, index) in data" 
@@ -69,7 +95,11 @@ export default {
     return {
       query: '',
       data: [],
-      maxScore: 0
+      maxScore: 0,
+      items: [
+        // Stores user input list items, eg. {id: 1, symptom: "Fever"}
+      ],
+      newItem: "",
     }
   },
   methods: {
@@ -127,6 +157,19 @@ export default {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
+    /* Add user input item to list */
+    addItem() {
+      if (this.newItem) {
+        this.items.push({
+          symptom: this.newItem
+        });
+        this.newItem = "";
+      }
+    },
+    /* Remove item from list */
+    removeItem(index) {
+      this.items.splice(index, 1);
     }
   }
 }
