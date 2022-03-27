@@ -22,17 +22,49 @@ client.ping({ requestTimeout: 30000 }, function(error) {
 });
 
 app.get('/search', function (req, res){
-    let body = {
-      size: 100,
-      from: 0,
-      query: {
-        match: {
-            symptoms: {
-                query: req.query['q'],
-                analyzer: "search_grams"
-            }
+    // let body = {
+    //   size: 100,
+    //   from: 0,
+    //   query: {
+    //     match: {
+    //         symptoms: {
+    //             query: req.query['q'],
+    //             analyzer: "search_grams"
+    //         }
+    //     }
+    // }   
+    let symptoms = req.query['q'].split(',')
+    let symptomsArray = []
+    for (symptom of symptoms) {
+        if(symptom.split(' ').length == 1) {
+            symptomsArray.push({
+                match: {
+                    symptoms: {
+                        query: symptom,
+                        analyzer: "search_grams",
+                        fuzziness: "1"
+                    }
+                }
+            })
+        } else {
+            symptomsArray.push({
+                match_phrase: {
+                    symptoms: {
+                        query: symptom,
+                        analyzer: "search_grams",
+                    }
+                }
+            })
         }
-    }    
+    }
+    let body = {
+        size: 100,
+        from: 0,
+        query: {
+            bool: {
+                should: symptomsArray
+            }
+      }    
 }
    
 client.search({index:'symptoms-icare-default', body:body})
