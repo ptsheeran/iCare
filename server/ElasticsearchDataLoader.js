@@ -80,7 +80,18 @@ client.bulk({body: bulkBody})
 
 async function indexData() {
     const articlesRaw = await fs.readFileSync(path.resolve(__dirname, 'common_illness.json'))
+    const symptomsRaw = await fs.readFileSync(path.resolve(__dirname, 'symptoms_list.json'))
     const articles = JSON.parse(articlesRaw);
+    const symptoms = JSON.parse(symptomsRaw);
+    for(let i in articles) {
+      articles[i]['symptoms_list'] = []
+      for(let symptom of symptoms) {
+        if(articles[i].symptoms.toLowerCase().includes(symptom)) {
+          articles[i]['symptoms_list'].push(symptom)
+        }
+      }
+      console.log(articles[i]['symptoms_list'])
+    }
     console.log(`${articles.length} items parsed from data file`);
     bulkIndex('symptoms-icare-default', articles);
   }

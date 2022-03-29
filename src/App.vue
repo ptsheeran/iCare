@@ -106,6 +106,7 @@ export default {
   data() {
     return {
       data: [],
+      recommendations: [],
       maxScore: 0,
       items: [
         // Stores user input list items, eg. {id: 1, symptom: "Fever"}
@@ -120,9 +121,14 @@ export default {
         this.axios.get('http://localhost:5000/search?q='+query)
               .then(response => {
                 this.maxScore = response.data.max_score
-                this.data = response.data.hits.filter(hit => hit._score > 0.7 * this.maxScore).splice(0,8);
+                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore).splice(0,8);
+                for (let illness of this.data) {
+                  if(illness.symptoms_list.length > 0)
+                  this.recommendations.concat(illness.symptoms_list)
+                }
+                this.recommendations = new Set(this.recommendations)
                 // eslint-disable-next-line no-console
-                console.log(this.data)
+                console.log(this.recommendations)
                 // eslint-disable-next-line no-console
                 console.log(response.data.hits)
           })
