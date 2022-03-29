@@ -81,7 +81,7 @@
             class="card column is-3">
           
             <img v-if="value._source.img" class="card-image" :src="value._source.img">
-            <img v-else class="card-image" :src="showImage()">
+            <img v-else class="card-image" :src="showImage(value._source.illness)">
               
             <div class="card-footer">
               <h3 class="card-title">{{value._source.illness}}</h3>
@@ -127,9 +127,17 @@ export default {
                 console.log(response.data.hits)
           })
     },
-    showImage() {
+    showImage(disease) {
       let imgAddress;
-      let random = this.getRandomInt(0,9);
+
+      let hash = 0
+
+      for (let i = 0; i < disease.length; i++) {
+        hash += parseInt(disease[i].charCodeAt(0));
+      }
+
+      random = (hash % 10)
+
         switch (random) {
           case 0:
             imgAddress = 'https://revcycleintelligence.com/images/site/article_headers/_normal/2020-01-06_nurses.png';
