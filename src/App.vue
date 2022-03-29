@@ -22,69 +22,81 @@
         </ul>
       </div>
     </nav>
-    <br><br><br>
-    <div class="text-center">
-      <img src="./assets/med.png" alt="" width="150" height="auto">
-      <br><br>
-      <h3>What are your symptoms?</h3>
-    </div>
-    <br>
-    <div class="center-block w-25">
-      <div class="input-group">
-        <input v-model="newItem" @keyup.enter="addItem" id="userinput" type="text" class="form-control" placeholder="Add a symptom..." aria-label="Add an item" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button @click="addItem" class="btn btn-outline-info" id="enter" type="button">Add</button>
+    
+    <div class="fill d-md-flex h-md-100 align-items-start">
+      
+      <!-- Beginning of Left Panel -->
+      <div class="left-panel col-md-6 p-0 h-md-100">
+        <br><br><br>
+        <div class="text-center">
+          <img src="./assets/med.png" alt="" width="150" height="auto">
+          <br><br><br>
+          <h3>What are your symptoms?</h3>
+        </div>
+        <br>
+        <div class="center-block w-50">
+          <div class="input-group">
+            <input v-model="newItem" @keyup.enter="addItem" id="userinput" type="text" class="form-control" placeholder="Add a symptom..." aria-label="Add an item" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button @click="addItem" class="btn btn-outline-info" id="enter" type="button">Add</button>
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <div class="center-block w-50">
+          <ul class="list-group" id="symptom-list">
+            <li v-for="(item, index) in items" :key="item.id" class="list-group-item">
+              {{ item }}
+              <button @click="removeItem(index)" class="close">
+                <span>&times;</span> 
+              </button>
+            </li>
+          </ul>
+        </div>
+        <br>
+        <button @click="search" type="button" id="search-btn" class="btn btn-primary btn-lg btn-block w-50 center-block">SEARCH</button>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      </div>
+      <!-- End of Left Panel-->
+
+      <!-- Old input box -->
+      <!--div class="input-group input-group-lg center-block w-50">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Search</span>
+        <input type="text" 
+        class="form-control" 
+        aria-label="Sizing example input" 
+        aria-describedby="inputGroup-sizing-lg"
+        placeholder="Enter here" 
+        @keyup.prevent="search"
+        v-model="query" />
+      </div> -->
+
+      <!-- Beginning of Right Panel -->
+      <div class="right-panel col-md-6 p-0 h-md-100">
+        <br><br>
+        <div v-if="data" class="card-row columns is-multiline">
+          <div v-for="(value, index) in data" 
+            :key="index"
+            :ref="`card_${index}`"
+            class="card column is-3">
+          
+            <img v-if="value._source.img" class="card-image" :src="value._source.img">
+            <img v-else class="card-image" :src="showImage()">
+              
+            <div class="card-footer">
+              <h3 class="card-title">{{value._source.illness}}</h3>
+              <!-- <p class="card-text">by 
+                <span class="card-author">{{value._source.og_name}}</span>
+              </p> -->
+            </div>
+
+            <a class="btn btn-primary stretched-link" :href="value._source.url"></a>
+          </div>
         </div>
       </div>
-    </div>
-    <br>
-    <div class="center-block w-25">
-      <ul class="list-group" id="symptom-list">
-        <li v-for="(item, index) in items" :key="item.id" class="list-group-item">
-          {{ item }}
-          <button @click="removeItem(index)" class="close">
-            <span>&times;</span> 
-          </button>
-        </li>
-      </ul>
-    </div>
-    <br>
-    <button @click="search" type="button" class="btn btn-primary btn-lg btn-block w-25 center-block">SEARCH</button>
-    <br>
-    <br>
-    <br>
+      <!-- End of Right Panel -->
 
-    <!-- Old input box -->
-    <!--div class="input-group input-group-lg center-block w-50">
-      <span class="input-group-text" id="inputGroup-sizing-lg">Search</span>
-      <input type="text" 
-      class="form-control" 
-      aria-label="Sizing example input" 
-      aria-describedby="inputGroup-sizing-lg"
-      placeholder="Enter here" 
-      @keyup.prevent="search"
-      v-model="query" />
-    </div> -->
-
-    <div v-if="data" class="card-row">
-      <div v-for="(value, index) in data" 
-        :key="index"
-        :ref="`card_${index}`"
-          class="card">
-      
-        <img v-if="value._source.img" class="card-image" :src="value._source.img">
-        <img v-else class="card-image" :src="showImage()">
-      
-        <div class="card-footer">
-          <h3 class="card-title">{{value._source.illness}}</h3>
-          <!-- <p class="card-text">by 
-            <span class="card-author">{{value._source.og_name}}</span>
-          </p> -->
-        </div>
-
-        <a class="btn btn-primary stretched-link" :href="value._source.url"></a>
-      </div>
-    </div>
+    </div> 
   </div>
 </template>
 
@@ -179,12 +191,24 @@ export default {
 </script>
 
 <style>
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"; /* Import bulma for showing cards in multi-row */
+
 div.container{text-align: center;}
 
+.fill, .left-panel, .right-panel { 
+  min-height: 100%;
+  height: 100%;
+  /*overflow-x: hidden; */  /* Disable cards overflow to the right */
+} 
 
-.container-fluid {
-  background-color: #F0F8FF;
+.left-panel {
+  background-color: #F0F8FF; /* Light blue */
 }
+
+.right-panel {
+  background-color: #FFFFFF; /* White */
+}
+
 .center-block {
     display: table;  /* Instead of display:block */
     margin-left: auto;
