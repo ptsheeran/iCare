@@ -80,7 +80,7 @@ client.bulk({body: bulkBody})
 
 async function indexData() {
     const articlesRaw = await fs.readFileSync(path.resolve(__dirname, 'common_illness.json'))
-    const symptomsRaw = await fs.readFileSync(path.resolve(__dirname, 'symptoms_list.json'))
+    const symptomsRaw = await fs.readFileSync(path.resolve(__dirname, 'symptoms_array.json'))
     const articles = JSON.parse(articlesRaw);
     const symptoms = JSON.parse(symptomsRaw);
     for(let i in articles) {

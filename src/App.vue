@@ -122,13 +122,26 @@ export default {
               .then(response => {
                 this.maxScore = response.data.max_score
                 this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore).splice(0,8);
-                for (let illness of this.data) {
-                  if(illness.symptoms_list.length > 0)
-                  this.recommendations.concat(illness.symptoms_list)
+                let union = []
+                let intersection = []
+                for (let i in this.data) {
+                  if(this.data[i]._source.symptoms_list.length > 0) {
+                    union = union.concat(this.data[i]._source.symptoms_list)
+                  }
+                  if(i == 0) {
+                    intersection = this.data[i]._source.symptoms_list
+                  } else {
+                    intersection = intersection.filter(x => this.data[i]._source.symptoms_list.includes(x))
+                  }
                 }
-                this.recommendations = new Set(this.recommendations)
+                union = new Set(union)
+                this.recommendations = [...union].filter(x => !intersection.includes(x))
                 // eslint-disable-next-line no-console
-                console.log(this.recommendations)
+                console.log('union', union)
+                // eslint-disable-next-line no-console
+                console.log('inter', intersection)
+                // eslint-disable-next-line no-console
+                console.log('recos', this.recommendations)
                 // eslint-disable-next-line no-console
                 console.log(response.data.hits)
           })
