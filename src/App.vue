@@ -55,7 +55,7 @@
         </div>
         <br>
         <button @click="search" type="button" id="search-btn" class="btn btn-primary btn-lg btn-block w-50 center-block">SEARCH</button>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       </div>
       <!-- End of Left Panel-->
 
@@ -81,9 +81,9 @@
             class="card column is-3">
           
             <img v-if="value._source.img" class="card-image" :src="value._source.img">
-            <img v-else class="card-image" :src="showImage()">
+            <img v-else class="card-image" :src="showImage(value._source.illness)">
               
-            <div class="card-footer">
+            <div class="card-footer bg-white">
               <h3 class="card-title">{{value._source.illness}}</h3>
               <!-- <p class="card-text">by 
                 <span class="card-author">{{value._source.og_name}}</span>
@@ -133,9 +133,17 @@ export default {
                 console.log(response.data.hits)
           })
     },
-    showImage() {
+    showImage(disease) {
       let imgAddress;
-      let random = this.getRandomInt(0,9);
+
+      let hash = 0
+
+      for (let i = 0; i < disease.length; i++) {
+        hash += parseInt(disease[i].charCodeAt(0));
+      }
+
+      let random = (hash % 10)
+
         switch (random) {
           case 0:
             imgAddress = 'https://revcycleintelligence.com/images/site/article_headers/_normal/2020-01-06_nurses.png';
@@ -252,16 +260,8 @@ div.container{text-align: center;}
   padding: 10px 15px;
   font-family: Helvetica;
 }
-.card-text {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.7);
-}
 .card-title {
   font-family: Serif;
-}
-.card-author {
-  font-size: 14px;
-  color: #BAB096;
 }
 </style>
 
