@@ -209,8 +209,13 @@ export default {
     /* Add user input item to list */
     addItem() {
       if (this.newItem.length < 50) {
-        if (this.newItem) {
-          this.items.push(this.newItem);
+        if(this.items.length < 20) {
+          if (this.newItem) {
+            this.items.push(this.newItem);
+            this.newItem = "";
+          }
+        } else {
+          window.alert("Cannot exceed 20 symptoms per search.")
           this.newItem = "";
         }
       } else {
