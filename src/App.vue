@@ -136,7 +136,7 @@ export default {
         hash += parseInt(disease[i].charCodeAt(0));
       }
 
-      random = (hash % 10)
+      let random = (hash % 10)
 
         switch (random) {
           case 0:
