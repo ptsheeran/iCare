@@ -42,6 +42,20 @@
             </div>
           </div>
         </div>
+        <div id="suggestions">
+          <div v-if="recommendations.length >= 3">
+            Suggestions: {{ recommendations[0] }}, {{ recommendations[1] }}, {{ recommendations[2] }}
+          </div>
+          <div v-else-if="recommendations.length == 2">
+            Suggestions: {{ recommendations[0] }}, {{ recommendations[1] }}
+          </div>
+          <div v-else-if="recommendations.length == 1">
+            Suggestions: {{ recommendations[0] }}
+          </div>
+          <div v-else>
+            No current suggestions
+          </div>
+        </div>
         <br><br>
         <div class="center-block w-50">
           <ul class="list-group" id="symptom-list">
@@ -136,12 +150,7 @@ export default {
                 }
                 union = new Set(union)
                 this.recommendations = [...union].filter(x => !intersection.includes(x))
-                // eslint-disable-next-line no-console
-                console.log('union', union)
-                // eslint-disable-next-line no-console
-                console.log('inter', intersection)
-                // eslint-disable-next-line no-console
-                console.log('recos', this.recommendations)
+                this.recommendations = this.recommendations.filter(x => !this.items.includes(x))
                 // eslint-disable-next-line no-console
                 console.log(response.data.hits)
           })
@@ -219,6 +228,10 @@ export default {
 
 <style>
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"; /* Import bulma for showing cards in multi-row */
+
+#suggestions {
+  margin-left: 15.8rem;
+}
 
 div.container{text-align: center;}
 
