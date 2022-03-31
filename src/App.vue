@@ -42,19 +42,19 @@
             </div>
           </div>
         </div>
-        <div id="suggestions">
-          <div v-if="recommendations.length >= 3">
+        <div>
+          <p class="suggestions" v-if="recommendations.length >= 3">
             Suggestions: {{ recommendations[0] }}, {{ recommendations[1] }}, {{ recommendations[2] }}
-          </div>
-          <div v-else-if="recommendations.length == 2">
+          </p>
+          <p class="suggestions" v-else-if="recommendations.length == 2">
             Suggestions: {{ recommendations[0] }}, {{ recommendations[1] }}
-          </div>
-          <div v-else-if="recommendations.length == 1">
+          </p>
+          <p class="suggestions" v-else-if="recommendations.length == 1">
             Suggestions: {{ recommendations[0] }}
-          </div>
-          <div v-else>
+          </p>
+          <p class="suggestions" v-else>
             No current suggestions
-          </div>
+          </p>
         </div>
         <br><br>
         <div class="center-block w-50">
@@ -171,7 +171,8 @@ export default {
             imgAddress = 'https://revcycleintelligence.com/images/site/article_headers/_normal/2020-01-06_nurses.png';
             break;
           case 1:
-            imgAddress = 'https://imageio.forbes.com/specials-images/imageserve/5edaacf9b6ac5c00076559df/A-stethoscope-and-clipboard-in-a-doctor-s-office-/960x0.jpg?fit=bounds&format=jpg&width=960';
+            // imgAddress = 'https://imageio.forbes.com/specials-images/imageserve/5edaacf9b6ac5c00076559df/A-stethoscope-and-clipboard-in-a-doctor-s-office-/960x0.jpg?fit=bounds&format=jpg&width=960';
+            imgAddress = 'https://revcycleintelligence.com/images/site/article_headers/_normal/2020-01-06_nurses.png';
             break;
           case 2:
             imgAddress = 'https://www.cdc.gov/diseasesconditions/images/cards/covid19.jpg?_=56306';
@@ -234,8 +235,10 @@ export default {
 <style>
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"; /* Import bulma for showing cards in multi-row */
 
-#suggestions {
-  margin-left: 15.8rem;
+.suggestions {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
   font-weight: bold;
 }
 
