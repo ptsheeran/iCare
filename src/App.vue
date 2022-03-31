@@ -42,6 +42,20 @@
             </div>
           </div>
         </div>
+        <div id="suggestions">
+          <div v-if="recommendations.length >= 3">
+            Suggestions: {{ recommendations[0] }}, {{ recommendations[1] }}, {{ recommendations[2] }}
+          </div>
+          <div v-else-if="recommendations.length == 2">
+            Suggestions: {{ recommendations[0] }}, {{ recommendations[1] }}
+          </div>
+          <div v-else-if="recommendations.length == 1">
+            Suggestions: {{ recommendations[0] }}
+          </div>
+          <div v-else>
+            No current suggestions
+          </div>
+        </div>
         <br><br>
         <div class="center-block w-50">
           <ul class="list-group" id="symptom-list">
@@ -106,6 +120,7 @@ export default {
   data() {
     return {
       data: [],
+      recommendations: [],
       maxScore: 0,
       items: [
         // Stores user input list items, eg. {id: 1, symptom: "Fever"}
@@ -120,9 +135,22 @@ export default {
         this.axios.get('http://localhost:5000/search?q='+query)
               .then(response => {
                 this.maxScore = response.data.max_score
-                this.data = response.data.hits.filter(hit => hit._score > 0.7 * this.maxScore).splice(0,8);
-                // eslint-disable-next-line no-console
-                console.log(this.data)
+                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore).splice(0,8);
+                let union = []
+                let intersection = []
+                for (let i in this.data) {
+                  if(this.data[i]._source.symptoms_list.length > 0) {
+                    union = union.concat(this.data[i]._source.symptoms_list)
+                  }
+                  if(i == 0) {
+                    intersection = this.data[i]._source.symptoms_list
+                  } else {
+                    intersection = intersection.filter(x => this.data[i]._source.symptoms_list.includes(x))
+                  }
+                }
+                union = new Set(union)
+                this.recommendations = [...union].filter(x => !intersection.includes(x))
+                this.recommendations = this.recommendations.filter(x => !this.items.includes(x))
                 // eslint-disable-next-line no-console
                 console.log(response.data.hits)
           })
@@ -200,6 +228,10 @@ export default {
 
 <style>
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"; /* Import bulma for showing cards in multi-row */
+
+#suggestions {
+  margin-left: 15.8rem;
+}
 
 div.container{text-align: center;}
 
