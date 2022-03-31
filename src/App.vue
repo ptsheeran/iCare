@@ -236,6 +236,7 @@ export default {
 
 #suggestions {
   margin-left: 15.8rem;
+  font-weight: bold;
 }
 
 div.container{text-align: center;}
@@ -293,6 +294,7 @@ div.container{text-align: center;}
 }
 .card-title {
   font-family: Serif;
+  font-size: 24px;
 }
 </style>
 
