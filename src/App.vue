@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">iCare Symptom Checker</a>
+      <a class="navbar-brand" href="#">Movie Search</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -14,7 +14,7 @@
             <a class="nav-link" href="#">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://www.mayoclinic.org/symptom-checker/select-symptom/itt-20009075">Learn More</a>
+            <a class="nav-link" href="#">Learn More</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
@@ -29,39 +29,68 @@
       <div class="left-panel col-md-6 p-0 h-md-100">
         <br><br><br>
         <div class="text-center">
-          <img src="./assets/med.png" alt="" width="150" height="auto">
           <br><br><br>
-          <h3>What are your symptoms?</h3>
+          <h3>Search Movies</h3>
+        </div>
+        <br>
+
+        <!-- Title Input Field -->
+        <div class="center-block w-50">
+          <h6>Title: </h6>
+          <div class="input-group">
+            <input v-model="obj.title" id="movie_title" type="text" class="form-control" placeholder="Enter the title...">
+          </div>
+        </div>
+        <br>
+
+        <!-- Director Input Field -->
+        <div class="center-block w-50">
+          <h6>Director: </h6>
+          <div class="input-group">
+            <input v-model="obj.director" id="movie_director" type="text" class="form-control" placeholder="Enter the director...">
+          </div>
+        </div>
+        <br>
+
+        <!-- Genre & Keyword Input Field & List -->
+        <div class="center-block w-50">
+          <h6>Genre &amp; Keyword: </h6>
+          <div class="input-group">
+            <input v-model="newGenre" @keyup.enter="addGenre" id="movie_genre_keyword" type="text" class="form-control" placeholder="Add genre(s) and keyword(s)..." aria-label="Add an item" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button @click="addGenre" class="btn btn-outline-info" id="enter" type="button">Add</button>
+            </div>
+          </div> 
         </div>
         <br>
         <div class="center-block w-50">
+          <ul class="list-group" id="symptom-list">
+            <li v-for="(genre, index) in obj.genres" :key="genre.id" class="list-group-item">
+              {{ genre }}
+              <button @click="removeGenre(index)" class="close">
+                <span>&times;</span> 
+              </button>
+            </li>
+          </ul>
+        </div>
+        <br>
+
+        <!-- Casts Input Field & List -->
+        <div class="center-block w-50">
+          <h6>Casts: </h6>
           <div class="input-group">
-            <input v-model="newItem" @keyup.enter="addItem" id="userinput" type="text" class="form-control" placeholder="Add a symptom..." aria-label="Add an item" aria-describedby="basic-addon2">
+            <input v-model="newCast" @keyup.enter="addCast" id="movie_cast" type="text" class="form-control" placeholder="Add casts..." aria-label="Add an item" aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button @click="addItem" class="btn btn-outline-info" id="enter" type="button">Add</button>
+              <button @click="addCast" class="btn btn-outline-info" id="enter" type="button">Add</button>
             </div>
           </div>
         </div>
-        <div>
-          <p class="suggestions" v-if="recommendations.length >= 3">
-            Suggestions: {{ recommendations[0] }}, {{ recommendations[1] }}, {{ recommendations[2] }}
-          </p>
-          <p class="suggestions" v-else-if="recommendations.length == 2">
-            Suggestions: {{ recommendations[0] }}, {{ recommendations[1] }}
-          </p>
-          <p class="suggestions" v-else-if="recommendations.length == 1">
-            Suggestions: {{ recommendations[0] }}
-          </p>
-          <p class="suggestions" v-else>
-            No current suggestions
-          </p>
-        </div>
-        <br><br>
+        <br>
         <div class="center-block w-50">
           <ul class="list-group" id="symptom-list">
-            <li v-for="(item, index) in items" :key="item.id" class="list-group-item">
-              {{ item }}
-              <button @click="removeItem(index)" class="close">
+            <li v-for="(cast, index) in obj.casts" :key="cast.id" class="list-group-item">
+              {{ cast }}
+              <button @click="removeCast(index)" class="close">
                 <span>&times;</span> 
               </button>
             </li>
@@ -73,17 +102,6 @@
       </div>
       <!-- End of Left Panel-->
 
-      <!-- Old input box -->
-      <!--div class="input-group input-group-lg center-block w-50">
-        <span class="input-group-text" id="inputGroup-sizing-lg">Search</span>
-        <input type="text" 
-        class="form-control" 
-        aria-label="Sizing example input" 
-        aria-describedby="inputGroup-sizing-lg"
-        placeholder="Enter here" 
-        @keyup.prevent="search"
-        v-model="query" />
-      </div> -->
 
       <!-- Beginning of Right Panel -->
       <div class="right-panel col-md-6 p-0 h-md-100">
@@ -122,10 +140,14 @@ export default {
       data: [],
       recommendations: [],
       maxScore: 0,
-      items: [
-        // Stores user input list items, eg. {id: 1, symptom: "Fever"}
-      ],
-      newItem: "",
+      newGenre: "",
+      newCast:"",
+      obj: {
+        title: "",
+        director: "",
+        genres: [],
+        casts: []
+      },
     }
   },
   methods: {
@@ -155,6 +177,7 @@ export default {
                 console.log(response.data.hits)
           })
     },
+    /*
     showImage(disease) {
       let imgAddress;
 
@@ -201,32 +224,56 @@ export default {
       }
       return imgAddress;
     }, 
+    */
     /* Auxiliary function for showImage() to generate random integers */
+    /*
     getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
-    /* Add user input item to list */
-    addItem() {
-      if (this.newItem.length < 50) {
-        if(this.items.length < 20) {
-          if (this.newItem) {
-            this.items.push(this.newItem);
-            this.newItem = "";
+    */
+    /* Add new genres and keywords to list */
+    addGenre() {
+      if (this.newGenre.length < 50) {
+        if(this.obj.genres.length < 20) {
+          if (this.newGenre) {
+            this.obj.genres.push(this.newGenre);
+            this.newGenre = "";
           }
         } else {
-          window.alert("Cannot exceed 20 symptoms per search.")
-          this.newItem = "";
+          window.alert("Cannot exceed 20 genres or keywords per search.");
+          this.newGenre = "";
         }
       } else {
-        window.alert("Symptoms cannot exceed 50 characters.")
-        this.newItem = "";
+        window.alert("Genres or keywords cannot exceed 50 characters.");
+        this.newGenre = "";
       }
     },
-    /* Remove item from list */
-    removeItem(index) {
-      this.items.splice(index, 1);
+    /* Add new casts to list */
+    addCast() {
+      if (this.newCast.length < 50) {
+        if(this.obj.casts.length < 20) {
+          if (this.newCast) {
+            this.obj.casts.push(this.newCast);
+            this.newCast = "";
+          }
+        } else {
+          window.alert("Cannot exceed 20 casts per search.");
+          this.newCast = "";
+        }
+      } else {
+        window.alert("Casts cannot exceed 50 characters.");
+        this.newCast = "";
+      }
+    },
+    /* Remove genre from list */
+    removeGenre(index) {
+      this.obj.genres.splice(index, 1);
+    }, 
+    /* Remove cast from list */
+    removeCast(index) {
+      this.obj.casts.splice(index, 1);
     }
   }
 }
