@@ -5,7 +5,7 @@ const client = new elasticsearch.Client({
 });
 
 client.indices.delete({
-    index: 'symptoms-icare-default'
+    index: 'movies-icare-default'
   }, function(error, response, status) {
     if (error) {
         console.log(error);

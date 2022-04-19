@@ -6,42 +6,42 @@ const client = new elasticsearch.Client({
     hosts: [ 'http://localhost:9200']
 });
 
-ESsetting = {
-  "settings": {
-    "analysis": {
-      "filter": {
-        "index_filter": { 
-          "type": "common_grams",
-          "common_words": "_english_" 
-        },
-        "search_filter": { 
-          "type": "common_grams",
-          "common_words": "_english_", 
-          "query_mode":   true
-        },
-        "stop_words_filter": {
-          "type": "stop",
-          "common_words": "_english_",
-          "ignore_case": true
-        }
-      },
-      "analyzer": {
-        "index_grams": { 
-          "tokenizer":  "standard",
-          "filter":   [ "lowercase", "index_filter", "stop_words_filter"]
-        },
-        "search_grams": { 
-          "tokenizer": "standard",
-          "filter":  [ "lowercase", "stop_words_filter"]
-        }
-      }
-    }
-  }
-}
+// ESsetting = {
+//   "settings": {
+//     "analysis": {
+//       "filter": {
+//         "index_filter": { 
+//           "type": "common_grams",
+//           "common_words": "_english_" 
+//         },
+//         "search_filter": { 
+//           "type": "common_grams",
+//           "common_words": "_english_", 
+//           "query_mode":   true
+//         },
+//         "stop_words_filter": {
+//           "type": "stop",
+//           "common_words": "_english_",
+//           "ignore_case": true
+//         }
+//       },
+//       "analyzer": {
+//         "index_grams": { 
+//           "tokenizer":  "standard",
+//           "filter":   [ "lowercase", "index_filter", "stop_words_filter"]
+//         },
+//         "search_grams": { 
+//           "tokenizer": "standard",
+//           "filter":  [ "lowercase", "stop_words_filter"]
+//         }
+//       }
+//     }
+//   }
+// }
 
 client.indices.create({
-    index: 'symptoms-icare-default',
-    body: ESsetting
+    index: 'movies-icare-default',
+    //body: ESsetting
 }, function(error, response, status) {
     if (error) {
         console.log(error);
@@ -79,21 +79,14 @@ client.bulk({body: bulkBody})
   };
 
 async function indexData() {
-    const articlesRaw = await fs.readFileSync(path.resolve(__dirname, 'common_illness.json'))
-    const symptomsRaw = await fs.readFileSync(path.resolve(__dirname, 'symptoms_array.json'))
-    const articles = JSON.parse(articlesRaw);
-    const symptoms = JSON.parse(symptomsRaw);
-    for(let i in articles) {
-      articles[i]['symptoms_list'] = []
-      for(let symptom of symptoms) {
-        if(articles[i].symptoms.toLowerCase().includes(symptom)) {
-          articles[i]['symptoms_list'].push(symptom)
-        }
-      }
-      console.log(articles[i]['symptoms_list'])
+    const moviesDataRaw = await fs.readFileSync(path.resolve(__dirname, 'small_movie_data.json'))
+    const moviesData = JSON.parse(moviesDataRaw)
+    var moviesDataArray = []
+    for(movieIdx in moviesData) {
+         moviesDataArray[movieIdx] = moviesData[movieIdx]
     }
-    console.log(`${articles.length} items parsed from data file`);
-    bulkIndex('symptoms-icare-default', articles);
+    console.log(`${moviesDataArray.length} items parsed from data file`);
+    bulkIndex('movies-icare-default', moviesDataArray);
   }
 
   indexData();
