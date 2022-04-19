@@ -111,18 +111,19 @@
             :key="index"
             :ref="`card_${index}`"
             class="card column is-3">
-          
-            <img v-if="value._source.img" class="card-image" :src="value._source.img">
-            <img v-else class="card-image" :src="showImage(value._source.illness)">
+
+            <img class="card-image" :src="getPoster(value._source.imdb_id)">
+            <!--img v-if="value._source.img" class="card-image" :src="value._source.img">
+            <img v-else class="card-image" :src="showImage(value._source.illness)"-->
               
             <div class="card-footer bg-white">
-              <h3 class="card-title">{{value._source.illness}}</h3>
+              <h3 class="card-title">{{value._source.title}}</h3>
               <!-- <p class="card-text">by 
                 <span class="card-author">{{value._source.og_name}}</span>
               </p> -->
             </div>
 
-            <a class="btn btn-primary stretched-link" :href="value._source.url"></a>
+            <a class="btn btn-primary stretched-link" :href="getURL(value._source.imdb_id)"></a>
           </div>
         </div>
       </div>
@@ -274,6 +275,12 @@ export default {
     /* Remove cast from list */
     removeCast(index) {
       this.obj.casts.splice(index, 1);
+    }, 
+    getPoster(imdb_id) {
+      return "https://www.omdbapi.com/?apikey=430f6fbe&i=" + imdb_id;
+    }, 
+    getURL(imdb_id) {
+      return "https://www.imdb.com/title/" + imdb_id;
     }
   }
 }
