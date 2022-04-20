@@ -54,7 +54,7 @@
 
         <!-- Genre & Keyword Input Field & List -->
         <div class="center-block w-50">
-          <h6>Genre &amp; Keyword: </h6>
+          <h6>Genre &amp; Keywords: </h6>
           <div class="input-group">
             <input v-model="newGenre" @keyup.enter="addGenre" id="movie_genre_keyword" type="text" class="form-control" placeholder="Add genre(s) and keyword(s)..." aria-label="Add an item" aria-describedby="basic-addon2">
             <div class="input-group-append">
@@ -77,7 +77,7 @@
 
         <!-- Casts Input Field & List -->
         <div class="center-block w-50">
-          <h6>Casts: </h6>
+          <h6>Cast: </h6>
           <div class="input-group">
             <input v-model="newCast" @keyup.enter="addCast" id="movie_cast" type="text" class="form-control" placeholder="Add casts..." aria-label="Add an item" aria-describedby="basic-addon2">
             <div class="input-group-append">
