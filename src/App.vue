@@ -79,7 +79,7 @@
         <div class="center-block w-50">
           <h6>Cast: </h6>
           <div class="input-group">
-            <input v-model="newCast" @keyup.enter="addCast" id="movie_cast" type="text" class="form-control" placeholder="Add casts..." aria-label="Add an item" aria-describedby="basic-addon2">
+            <input v-model="newCast" @keyup.enter="addCast" id="movie_cast" type="text" class="form-control" placeholder="Add cast members..." aria-label="Add an item" aria-describedby="basic-addon2">
             <div class="input-group-append">
               <button @click="addCast" class="btn btn-outline-info" id="enter" type="button">Add</button>
             </div>
