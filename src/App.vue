@@ -101,6 +101,9 @@
         <br>
         <button @click="search" type="button" id="search-btn" class="btn btn-success btn-lg btn-block w-50 center-block">SEARCH</button>
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       </div>
       <!-- End of Left Panel-->
 
@@ -108,22 +111,26 @@
       <!-- Beginning of Right Panel -->
       <div class="right-panel col-md-6 p-0 h-md-100">
         <br><br>
-        <div v-if="data" class="card-row columns is-multiline">
+        <div v-if="data">
           <div v-for="(value, index) in data" 
             :key="index"
             :ref="`card_${index}`"
-            class="card column is-3">
-
-            <img class="card-image" :src="getPoster(value._source.imdb_id)">
-            
-            <div class="card-footer bg-white">
-              <h3 class="card-title">{{value._source.title}}</h3>
-              <!-- <p class="card-text">by 
-                <span class="card-author">{{value._source.og_name}}</span>
-              </p> -->
+            class="card mb-3 col-md-11">
+            <div class="row col-md-12">
+              <div class="col">
+                <img :src="getPoster(value._source.imdb_id)" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title font-weight-bold">{{value._source.title}}</h5>
+                  <p class="card-text">Rating: {{value._source.vote_average}}</p>
+                  <p class="card-text">Running Time: {{value._source.runtime}} minutes</p>
+                  <p class="card-text">Release Date: {{value._source.release_date}}</p>
+                  <p class="card-text font-weight-light">{{value._source.overview}}</p>
+                </div>
+              </div>
             </div>
-
-            <a class="btn btn-primary stretched-link" :href="getURL(value._source.imdb_id)"></a>
+            <a class="btn stretched-link" :href="getURL(value._source.imdb_id)"></a>
           </div>
         </div>
       </div>
