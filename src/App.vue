@@ -113,9 +113,7 @@
             class="card column is-3">
 
             <img class="card-image" :src="getPoster(value._source.imdb_id)">
-            <!--img v-if="value._source.img" class="card-image" :src="value._source.img">
-            <img v-else class="card-image" :src="showImage(value._source.illness)"-->
-              
+            
             <div class="card-footer bg-white">
               <h3 class="card-title">{{value._source.title}}</h3>
               <!-- <p class="card-text">by 
@@ -154,26 +152,35 @@ export default {
   methods: {
     search() {
         // let query = encodeURI(this.query);
-        let query = encodeURI(this.items.join())
+        // let query = encodeURI(this.items.join())
+        let query = encodeURI(JSON.stringify(this.obj))
         this.axios.get('http://localhost:5000/search?q='+query)
               .then(response => {
                 this.maxScore = response.data.max_score
-                this.data = response.data.hits.filter(hit => hit._score > 0.8 * this.maxScore).splice(0,8);
-                let union = []
-                let intersection = []
-                for (let i in this.data) {
-                  if(this.data[i]._source.symptoms_list.length > 0) {
-                    union = union.concat(this.data[i]._source.symptoms_list)
-                  }
-                  if(i == 0) {
-                    intersection = this.data[i]._source.symptoms_list
-                  } else {
-                    intersection = intersection.filter(x => this.data[i]._source.symptoms_list.includes(x))
-                  }
+                this.data = response.data.hits.filter(hit => hit._score > 0.7 * this.maxScore).splice(0,8);
+                if(this.obj.director.length > 0) {
+                  this.data = this.data.filter(hit => {
+                    let crew = hit._source.crew
+                    if(crew.filter(member => member.job.toLowerCase() == 'director')[0].name.toLowerCase() == this.obj.director.toLowerCase()) {
+                      return hit
+                    }
+                  })
                 }
-                union = new Set(union)
-                this.recommendations = [...union].filter(x => !intersection.includes(x))
-                this.recommendations = this.recommendations.filter(x => !this.items.includes(x))
+                // let union = []
+                // let intersection = []
+                // for (let i in this.data) {
+                //   if(this.data[i]._source.symptoms_list.length > 0) {
+                //     union = union.concat(this.data[i]._source.symptoms_list)
+                //   }
+                //   if(i == 0) {
+                //     intersection = this.data[i]._source.symptoms_list
+                //   } else {
+                //     intersection = intersection.filter(x => this.data[i]._source.symptoms_list.includes(x))
+                //   }
+                // }
+                // union = new Set(union)
+                // this.recommendations = [...union].filter(x => !intersection.includes(x))
+                // this.recommendations = this.recommendations.filter(x => !this.items.includes(x))
                 // eslint-disable-next-line no-console
                 console.log(response.data.hits)
           })
