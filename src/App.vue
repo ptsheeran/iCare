@@ -260,7 +260,7 @@ div.container{text-align: center;}
 } 
 
 .left-panel {
-  background-color: #F5FBF7; /* Light blue */
+  background-color: #F5FBF7; /* Light green */
 }
 
 .right-panel {
