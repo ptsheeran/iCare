@@ -78,17 +78,17 @@ app.get('/search', function (req, res){
     }
     let queryObj = JSON.parse(req.query['q'])
     if(queryObj['title'].length > 0) {
-        mp = {match_phrase: {title: queryObj['title']}}
+        let mp = {match_phrase: {title: queryObj['title']}}
         body.query.bool.must.push(mp)
     }
     if(queryObj['director'].length > 0) {
-        mp = {'match_phrase': {'crew.name': queryObj['director']}}
+        let mp = {'match_phrase': {'crew.name': queryObj['director']}}
         body.query.bool.must.push(mp)
     }
     if(queryObj['genres'].length > 0) {
-        genres = queryObj['genres'].join(' ')
-        mp1 = {'match_phrase': {'genres.name': genres}}
-        mp2 = {'match_phrase': {'keywords.name': genres}}
+        let genres = queryObj['genres'].join(' ')
+        let mp1 = {'match_phrase': {'genres.name': genres}}
+        let mp2 = {'match_phrase': {'keywords.name': genres}}
         // mp3 = {'match_phrase': {'overview': genres}}
         // mp4 = {'match_phrase': {'belongs_to_collection.name': genres}}
         // mp5 = {'match_phrase': {'tagline': genres}}
@@ -99,8 +99,11 @@ app.get('/search', function (req, res){
         // body.query.bool.should.push(mp5)
     }
     if(queryObj['casts'].length > 0) {
-        mm = {'match_phrase': {'cast.name': queryObj['casts'].join(' ')}}
-        body.query.bool.should.push(mm)
+        for (let i = 0; i < queryObj['casts'].length; i++) {
+            mm = {'match_phrase': {'cast.name': queryObj['casts'][i]}}
+            console.log(mm)
+            body.query.bool.should.push(mm)
+        }
     }
    
     client.search({index:'movies-icare-default', body:body})
