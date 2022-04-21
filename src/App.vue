@@ -1,10 +1,11 @@
 <template>
   <div id="app" class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Movie Search</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+      <a class="navbar-brand font-weight-bold" href="#">Movie Search</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      <!--
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
@@ -21,6 +22,7 @@
           </li>
         </ul>
       </div>
+      -->
     </nav>
     
     <div class="fill d-md-flex h-md-100 align-items-start">
@@ -58,7 +60,7 @@
           <div class="input-group">
             <input v-model="newGenre" @keyup.enter="addGenre" id="movie_genre_keyword" type="text" class="form-control" placeholder="Add genre(s) and keyword(s)..." aria-label="Add an item" aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button @click="addGenre" class="btn btn-outline-info" id="enter" type="button">Add</button>
+              <button @click="addGenre" class="btn btn-outline-secondary" id="enter" type="button">Add</button>
             </div>
           </div> 
         </div>
@@ -81,7 +83,7 @@
           <div class="input-group">
             <input v-model="newCast" @keyup.enter="addCast" id="movie_cast" type="text" class="form-control" placeholder="Add cast members..." aria-label="Add an item" aria-describedby="basic-addon2">
             <div class="input-group-append">
-              <button @click="addCast" class="btn btn-outline-info" id="enter" type="button">Add</button>
+              <button @click="addCast" class="btn btn-outline-secondary" id="enter" type="button">Add</button>
             </div>
           </div>
         </div>
@@ -97,7 +99,10 @@
           </ul>
         </div>
         <br>
-        <button @click="search" type="button" id="search-btn" class="btn btn-primary btn-lg btn-block w-50 center-block">SEARCH</button>
+        <button @click="search" type="button" id="search-btn" class="btn btn-success btn-lg btn-block w-50 center-block">SEARCH</button>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
       </div>
       <!-- End of Left Panel-->
@@ -106,22 +111,26 @@
       <!-- Beginning of Right Panel -->
       <div class="right-panel col-md-6 p-0 h-md-100">
         <br><br>
-        <div v-if="data" class="card-row columns is-multiline">
+        <div v-if="data">
           <div v-for="(value, index) in data" 
             :key="index"
             :ref="`card_${index}`"
-            class="card column is-3">
-
-            <img class="card-image" :src="getPoster(value._source.imdb_id)">
-            
-            <div class="card-footer bg-white">
-              <h3 class="card-title">{{value._source.title}}</h3>
-              <!-- <p class="card-text">by 
-                <span class="card-author">{{value._source.og_name}}</span>
-              </p> -->
+            class="card mb-3 col-md-11">
+            <div class="row col-md-12">
+              <div class="col">
+                <img :src="getPoster(value._source.imdb_id)" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title font-weight-bold">{{value._source.title}}</h5>
+                  <p class="card-text">Rating: {{value._source.vote_average}}</p>
+                  <p class="card-text">Running Time: {{value._source.runtime}} minutes</p>
+                  <p class="card-text">Release Date: {{value._source.release_date}}</p>
+                  <p class="card-text font-weight-light">{{value._source.overview}}</p>
+                </div>
+              </div>
             </div>
-
-            <a class="btn btn-primary stretched-link" :href="getURL(value._source.imdb_id)"></a>
+            <a class="btn stretched-link" :href="getURL(value._source.imdb_id)"></a>
           </div>
         </div>
       </div>
@@ -258,7 +267,7 @@ div.container{text-align: center;}
 } 
 
 .left-panel {
-  background-color: #F0F8FF; /* Light blue */
+  background-color: #F5FBF7; /* Light green */
 }
 
 .right-panel {
